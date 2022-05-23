@@ -81,6 +81,18 @@ struct ContentView: View {
                             let result = other.numberOfSteps(17)
                             print(result)
                         }
+                    
+                    Text("Missing Number In Arithmetic Progression")
+                        .onTapGesture {
+                            let result = other.missingNumber([0, 0, 0, 0 ,0])
+                            print(result)
+                        }
+                    
+                    Text("Add Digits")
+                        .onTapGesture {
+                            let result = other.addDigits(38)
+                            print(result)
+                        }
                 }
             }
             .navigationTitle("AASD")

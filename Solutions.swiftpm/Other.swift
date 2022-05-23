@@ -35,4 +35,23 @@ class Other: ObservableObject {
         }
         return steps
     }
+    
+    //https://leetcode.com/problems/missing-number-in-arithmetic-progression/
+    func missingNumber(_ arr: [Int]) -> Int {
+        let sortedSequence = arr.sorted()
+        guard let firstValue = sortedSequence.first, let lastValue = sortedSequence.last else { return 0}
+        let step = (lastValue - firstValue) / sortedSequence.count
+        guard step > 0 else { return firstValue }
+        let fullSequence = Array(stride(from: firstValue, through: lastValue, by: step))
+        return fullSequence.reduce(0, +) - sortedSequence.reduce(0, +)
+    }
+    
+    //https://leetcode.com/problems/add-digits/
+    func addDigits(_ num: Int) -> Int {
+        var result = num
+        repeat {
+            result = String(result).compactMap { $0.wholeNumberValue }.reduce(0, +)
+        } while result > 9
+        return result
+    }
 }

@@ -3,6 +3,18 @@
 ###General
 1) Priority Queue could be usefull to find N bigest(Max-Priority Queue) or smallest(Min-Priority Queue) elements of array.
 2) Use loop two-pointer technique for polindrome cheking.
+3) Check if a number is prime
+```swift
+extension Int {
+    func isPrime() -> Bool {
+        guard self >= 2 else { return false }
+        guard self != 2 else { return true  }
+        guard self % 2 != 0 else { return false }
+        return !stride(from: 3, through: Int(sqrt(Double(self))), by: 2).contains { self % $0 == 0 }
+    }
+}
+
+```
 
 ###Loops
 
