@@ -16,6 +16,18 @@ extension Int {
 
 ```
 
+###Array
+
+1) swap elements in array
+```swift
+private func swap<T>(_ array: inout [T], _ index1: Int, _ index2: Int ) {
+    guard index1 != index2 else { return }
+    let temp = array[index1]
+    array[index1] = array[index2]
+    array[index2] = temp
+}
+```
+
 ###Loops
 
 ```swift
@@ -72,11 +84,22 @@ for i in 0..<array.count {
 var leftIndex = 0
 var rightIndex = array.count-1
 while leftIndex <= rightIndex {
-    if array[leftIndex] != array[rightIndex] {
-        return false
-    }
     leftIndex += 1
     rightIndex -= 1
+}
+```
+
+6) reversed for loop
+```swift
+for i in (0..<5).reversed() {
+}
+```
+
+7) nested for loops
+```swift
+for i in 0..<array.count {
+    for j in i+1..<array.count {
+    }
 }
 ```
 
@@ -89,35 +112,20 @@ while leftIndex <= rightIndex {
 ###Binary Search
 
 ```swift
-func bs<T: Comparable>(_ a: [T], _ key: T) -> Int? {
-    var low = 0
-    var heigh = a.count
-    while low < heigh {
+func binarySearch(nums: [Int], target: Int) -> Int {
+    var low: Int = 0
+    var heigh: Int = nums.count-1
+    while low <= heigh {
         let mid = low + (heigh - low)/2
-        if a[mid] == key {
+        if nums[mid] == target {
             return mid
-        } else if a[mid] < key {
-            low = mid + 1
+        } else if nums[mid] > target {
+            heigh = mid - 1
         } else {
-            heigh = mid
+            low = mid + 1
         }
     }
-    return nil
-}
-```
-
-```swift
-var array = ["a", "b", "c", "d", "e", "f"]
-if let searchIndex = binarySearch(array, "b") {
-    print("Element found on index: \(searchIndex)") // result 1
-}
-```
-
-```swift
-var array = [1, 2, 3, 4, 5, 6]
-if let searchIndex = binarySearch(array, 2) {
-    print("Element found on index: \(searchIndex)") // result 1
-}
+    return -1
 ```
 
 ###Hash
