@@ -94,6 +94,12 @@ struct ContentView: View {
                             twoPointers.reverseString(&word)
                             print(word)
                         }
+                    
+                    Text("Reverse Words in a String III")
+                        .onTapGesture {
+                            let results = twoPointers.reverseWords("hallo, how are you?")
+                            print(results)
+                        }
                 }
                 
                 Section(header: Text("Array")) {
@@ -112,8 +118,13 @@ struct ContentView: View {
                             print(result)
                             print(result1)
                         }
+                    
+                    Text("Two Sum II - Input Array Is Sorted" )
+                        .onTapGesture {
+                            let result = arrays.twoSumSorted([2,7,11,15], 9)
+                            print(result)
+                        }
                 }
-                
                 
                 Section(header: Text("Other")) {
                     

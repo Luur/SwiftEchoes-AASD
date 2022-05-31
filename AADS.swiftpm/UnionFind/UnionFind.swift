@@ -1,6 +1,11 @@
-import UIKit
+//
+//  File.swift
+//  AADS
+//
+//  Created by Svyat Zubyak on 31.05.2022.
+//
 
-print("--- QuickFind ---")
+import Foundation
 
 class QuickFind {
     var elements: [Int] = []
@@ -24,18 +29,6 @@ class QuickFind {
         }
     }
 }
-
-let qf = QuickFind(count: 6)
-print(qf.elements)
-qf.union(p: 2, q: 5)
-print(qf.elements)
-qf.union(p: 2, q: 4)
-print(qf.elements)
-qf.union(p: 5, q: 0)
-print(qf.elements)
-qf.isConnected(p: 4, q: 5)
-
-print("--- HashableQuickFind ---")
 
 class HashableQuickFind<T: Hashable> {
     private var elements: [T: Int] = [:]
@@ -78,19 +71,7 @@ class HashableQuickFind<T: Hashable> {
     }
 }
 
-let hqf = HashableQuickFind<String>(elements: ["A", "B", "C", "D", "E", "F"])
-print(hqf.parents)
-hqf.union(p: "C", q: "F")
-print(hqf.parents)
-hqf.union(p: "C", q: "E")
-print(hqf.parents)
-hqf.union(p: "F", q: "A")
-print(hqf.parents)
-hqf.isConnected(p: "E", q: "F")
-
 //QuickUnion visualization: https://www.cs.usfca.edu/~galles/visualization/DisjointSets.html
-print("--- QuickUnion ---")
-
 class QuickUnion {
     var elements: [Int] = []
 
@@ -116,18 +97,6 @@ class QuickUnion {
         return node
     }
 }
-
-let qu = QuickUnion(count: 6)
-print(qu.elements)
-qu.union(p: 2, q: 5)
-print(qu.elements)
-qu.union(p: 2, q: 4)
-print(qu.elements)
-qu.union(p: 5, q: 0)
-print(qu.elements)
-qu.isConnected(p: 4, q: 5)
-
-print("--- HashableQuickUnion ---")
 
 class HashableQuickUnion<T: Hashable> {
     private var elements: [T: Int] = [:]
@@ -171,18 +140,6 @@ class HashableQuickUnion<T: Hashable> {
     }
 }
 
-let hqu = HashableQuickUnion<String>(elements: ["A", "B", "C", "D", "E", "F"])
-print(hqu.parents)
-hqu.union(p: "C", q: "F")
-print(hqu.parents)
-hqu.union(p: "C", q: "E")
-print(hqu.parents)
-hqu.union(p: "F", q: "A")
-print(hqu.parents)
-hqu.isConnected(p: "E", q: "F")
-
-print("--- WeightedQuickUnion ---")
-
 class WeightedQuickUnion: QuickUnion {
     var sizes: [Int] = []
 
@@ -210,20 +167,6 @@ class WeightedQuickUnion: QuickUnion {
     }
 }
 
-let wqu = WeightedQuickUnion(count: 6)
-print(wqu.elements, wqu.sizes)
-wqu.union(p: 2, q: 5)
-print(wqu.elements, wqu.sizes)
-wqu.union(p: 2, q: 4)
-print(wqu.elements, wqu.sizes)
-wqu.union(p: 3, q: 0)
-print(wqu.elements, wqu.sizes)
-wqu.union(p: 4, q: 3)
-print(wqu.elements, wqu.sizes)
-wqu.isConnected(p: 4, q: 5)
-
-print("--- HashableWeightedQuickUnion ---")
-
 class HashableWeightedQuickUnion<T: Hashable>: HashableQuickUnion<T> {
     var sizes: [Int] = []
     
@@ -245,20 +188,6 @@ class HashableWeightedQuickUnion<T: Hashable>: HashableQuickUnion<T> {
     }
 }
 
-let hwqu = HashableWeightedQuickUnion<String>(elements: ["A", "B", "C", "D", "E", "F"])
-print(hwqu.parents, hwqu.sizes)
-hwqu.union(p: "C", q: "F")
-print(hwqu.parents, hwqu.sizes)
-hwqu.union(p: "C", q: "E")
-print(hwqu.parents, hwqu.sizes)
-hwqu.union(p: "D", q: "A")
-print(hwqu.parents, hwqu.sizes)
-hwqu.union(p: "E", q: "D")
-print(hwqu.parents, hwqu.sizes)
-hwqu.isConnected(p: "E", q: "F")
-
-print("--- WeightedQuickUnionWithPathCompression ---")
-
 class WeightedQuickUnionWithPathCompression: WeightedQuickUnion {
     
     override func root(of node: Int) -> Int {
@@ -271,20 +200,6 @@ class WeightedQuickUnionWithPathCompression: WeightedQuickUnion {
     }
 }
 
-let wqupc = WeightedQuickUnionWithPathCompression(count: 6)
-print(wqupc.elements, wqupc.sizes)
-wqupc.union(p: 2, q: 5)
-print(wqupc.elements, wqupc.sizes)
-wqupc.union(p: 2, q: 4)
-print(wqupc.elements, wqupc.sizes)
-wqupc.union(p: 3, q: 0)
-print(wqupc.elements, wqupc.sizes)
-wqupc.union(p: 4, q: 3)
-print(wqupc.elements, wqupc.sizes)
-wqupc.isConnected(p: 4, q: 5)
-
-print("--- HashableWeightedQuickUnionWithPathCompression ---")
-
 class HashableWeightedQuickUnionWithPathCompression<T: Hashable>: HashableWeightedQuickUnion<T> {
     
     override func rootBy(_ index: Int) -> Int {
@@ -294,15 +209,3 @@ class HashableWeightedQuickUnionWithPathCompression<T: Hashable>: HashableWeight
         return parents[index]
     }
 }
-
-let hwqupc = HashableWeightedQuickUnionWithPathCompression<String>(elements: ["A", "B", "C", "D", "E", "F"])
-print(hwqupc.parents, hwqupc.sizes)
-hwqupc.union(p: "C", q: "F")
-print(hwqupc.parents, hwqupc.sizes)
-hwqupc.union(p: "C", q: "E")
-print(hwqupc.parents, hwqupc.sizes)
-hwqupc.union(p: "D", q: "A")
-print(hwqupc.parents, hwqupc.sizes)
-hwqupc.union(p: "E", q: "D")
-print(hwqupc.parents, hwqupc.sizes)
-hwqupc.isConnected(p: "E", q: "F")

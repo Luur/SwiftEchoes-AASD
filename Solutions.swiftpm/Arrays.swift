@@ -42,5 +42,20 @@ class Arrays: ObservableObject {
         }
         return []
     }
+    
+    func twoSumSorted(_ numbers: [Int], _ target: Int) -> [Int] {
+        var low = 0
+        var heigh = numbers.count-1
+        while low < heigh {
+            if numbers[low] + numbers[heigh] > target {
+                heigh -= 1
+            } else if numbers[low] + numbers[heigh] < target {
+                low += 1
+            } else {
+                return [low+1, heigh+1]
+            }
+        }
+        return []
+    }
 }
 

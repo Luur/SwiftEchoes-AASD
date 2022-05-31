@@ -78,4 +78,17 @@ class TwoPointers: ObservableObject {
             heigh -= 1
         }
     }
+    
+    //https://leetcode.com/problems/reverse-words-in-a-string-iii/
+    func reverseWords(_ s: String) -> String {
+        var words = s.components(separatedBy: " ")
+        var i = 0
+        while i != words.count-1 {
+            var word = Array(words[i])
+            reverseString(&word)
+            words[i] = String(word)
+            i += 1
+        }
+        return words.joined(separator: " ")
+    }
 }
