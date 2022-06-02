@@ -66,6 +66,72 @@ struct LinkedList<Value> {
         //Since this is tail-end insertion, your new node is also the tail of the list.
         tail = tail?.next
     }
+    
+    func node(at index: Int) -> Node<Value>? {
+        var currentNode = head
+        var currentIndex = 0
+        while currentNode != nil && currentIndex < index {
+            currentNode = currentNode!.next
+            currentIndex += 1
+        }
+        return currentNode
+    }
+    
+    @discardableResult
+    mutating func insert(_ value: Value, after node: Node<Value>) -> Node<Value> {
+        guard tail !== node else {
+            append(value)
+            return tail!
+        }
+        let newNode = Node(value: value, next: node.next)
+        node.next = newNode
+        return newNode
+    }
+    
+    @discardableResult
+    public mutating func pop() -> Value? {
+        defer {
+            head = head?.next
+            if isEmpty {
+                tail = nil
+            }
+        }
+        return head?.value
+    }
+    
+    @discardableResult
+    public mutating func removeLast() -> Value? {
+        // If head is nil, there’s nothing to remove, so you return nil.
+        guard let head = head else {
+            return nil
+        }
+        // If the list only consists of one node, removeLast is functionally equivalent to pop.
+        guard head.next != nil else {
+            return pop()
+        }
+        // You keep searching for a next node until current.next is nil. This signifies that current is the last node of the list.
+        var prev = head
+        var current = head
+        while let next = current.next {
+            prev = current
+            current = next
+        }
+        // Since current is the last node, you simply disconnect it using the prev.next reference. You also make sure to update the tail reference.
+        prev.next = nil
+        tail = prev
+        return current.value
+    }
+    
+    @discardableResult
+    public mutating func remove(after node: Node<Value>) -> Value? {
+        defer {
+            if node.next === tail {
+                tail = node
+            }
+            node.next = node.next?.next
+        }
+        return node.next?.value
+    }
 }
 
 extension LinkedList: CustomStringConvertible {

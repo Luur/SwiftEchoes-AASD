@@ -35,6 +35,10 @@ extension LinkedListView {
     func runAllExamples() {
         push()
         append()
+        insertAfter()
+        pop()
+        removeLast()
+        removeAfter()
     }
     
     func push() {
@@ -53,5 +57,53 @@ extension LinkedListView {
         list.append(2)
         list.append(3)
         print(list)
+    }
+    
+    func insertAfter() {
+        print("---Example of insert after---")
+        var list = LinkedList<Int>()
+        list.push(3)
+        list.push(2)
+        list.push(1)
+        print("Before inserting: \(list)")
+        let middleNode = list.node(at: 1)!
+        list.insert(-1, after: middleNode)
+        print("After inserting: \(list)")
+    }
+    
+    func pop() {
+        print("---Example of pop---")
+        var list = LinkedList<Int>()
+        list.push(3)
+        list.push(2)
+        list.push(1)
+        print("Before popping: \(list)")
+        let poppedValue = list.pop()
+        print("After popping: \(list)")
+        print("Popped value: " + String(describing: poppedValue))
+    }
+    
+    func removeLast() {
+        print("---Example of remove last---")
+        var list = LinkedList<Int>()
+        list.push(3)
+        list.push(2)
+        list.push(1)
+        print("Before removing: \(list)")
+        let removedValue = list.removeLast()
+        print("After removing: \(list)")
+        print("Removed value: " + String(describing: removedValue))
+    }
+    
+    func removeAfter() {
+        print("---Example of remove after---")
+        var list = LinkedList<Int>()
+        list.push(3)
+        list.push(2)
+        list.push(1)
+        print("Before removing: \(list)")
+        let middleNode = list.node(at: 0)!
+        list.remove(after: middleNode)
+        print("After removing: \(list)")
     }
 }
