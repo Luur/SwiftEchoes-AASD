@@ -68,6 +68,48 @@ struct ContentView: View {
                             let result = linkedList.middleNode(ListNode(1, ListNode(2, ListNode(3, ListNode(4, ListNode(5, ListNode(6, nil)))))))
                             print(result?.val)
                         }
+                    
+                    Text("Merge Two Sorted Lists")
+                        .onTapGesture {
+                            let result = linkedList.mergeTwoLists(ListNode(1, ListNode(2, ListNode(5, ListNode(6, ListNode(8, nil))))), ListNode(2, ListNode(3, ListNode(8, nil))))
+                            print(result)
+                        }
+                    
+                    Text("Add Two Numbers")
+                        .onTapGesture {
+                            let result = linkedList.addTwoNumbers(ListNode(9, ListNode(9, ListNode(9, ListNode(9, ListNode(9, ListNode(9, ListNode(9, nil))))))), ListNode(9, ListNode(9, ListNode(9, ListNode(9, nil)))))
+                            print(result)
+                        }
+                    
+                    Text("Reverse Linked List")
+                        .onTapGesture {
+                            let result = linkedList.reverseList(ListNode(1, ListNode(2, ListNode(3, ListNode(4, ListNode(5, ListNode(6, nil)))))))
+                            print(result)
+                        }
+                    
+                    Text("Merge k Sorted Lists")
+                        .onTapGesture {
+                            let result = linkedList.mergeKLists([ListNode(1, ListNode(4, ListNode(5, nil))), ListNode(1, ListNode(3, ListNode(4, nil))), ListNode(2, ListNode(6, nil))])
+                            print(result)
+                        }
+                    
+                    Text("Swap Nodes in Pairs")
+                        .onTapGesture {
+                            let result = linkedList.swapPairs(ListNode(1, ListNode(2, ListNode(3, ListNode(4, ListNode(5, ListNode(6, nil)))))))
+                            print(result)
+                        }
+                    
+                    Text("Rotate List")
+                        .onTapGesture {
+                            let result = linkedList.rotateRight(ListNode(1, ListNode(2, ListNode(3, ListNode(4, ListNode(5, ListNode(6, nil)))))), 3)
+                            print(result)
+                        }
+                    
+                    Text("Remove Duplicates from Sorted List")
+                        .onTapGesture {
+                            let result = linkedList.deleteDuplicates(ListNode(1, ListNode(1, ListNode(2, ListNode(3, ListNode(3, ListNode(5, nil)))))))
+                            print(result)
+                        }
                 }
                 
                 Section(header: Text("Two Pointers")) {

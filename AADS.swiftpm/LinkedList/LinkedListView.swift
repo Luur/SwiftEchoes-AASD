@@ -17,8 +17,8 @@ struct LinkedListView: View {
                 .imageScale(.large)
                 .foregroundColor(.accentColor)
             
-            Button("Run Example") {
-                runAllExamples()
+            Button("Run Node Examples") {
+                runAllNodeExamples()
             }
             .padding()
             .background(Color.black)
@@ -29,81 +29,38 @@ struct LinkedListView: View {
     }
 }
 
-//MARK: - Examples
+//MARK: - ListNode Examples
 extension LinkedListView {
     
-    func runAllExamples() {
-        push()
-        append()
-        insertAfter()
-        pop()
-        removeLast()
-        removeAfter()
+    var node: Node<Int>? {
+        Node(value: 0, next: Node(value: 1, next: Node(value: 2, next: Node(value: 3, next: nil))))
     }
     
-    func push() {
-        print("---Example of push---")
-        var list = LinkedList<Int>()
-        list.push(3)
-        list.push(2)
-        list.push(1)
-        print(list)
-    }
-    
-    func append() {
-        print("---Example of append---")
-        var list = LinkedList<Int>()
-        list.append(1)
-        list.append(2)
-        list.append(3)
-        print(list)
-    }
-    
-    func insertAfter() {
-        print("---Example of insert after---")
-        var list = LinkedList<Int>()
-        list.push(3)
-        list.push(2)
-        list.push(1)
-        print("Before inserting: \(list)")
-        let middleNode = list.node(at: 1)!
-        list.insert(-1, after: middleNode)
-        print("After inserting: \(list)")
-    }
-    
-    func pop() {
-        print("---Example of pop---")
-        var list = LinkedList<Int>()
-        list.push(3)
-        list.push(2)
-        list.push(1)
-        print("Before popping: \(list)")
-        let poppedValue = list.pop()
-        print("After popping: \(list)")
-        print("Popped value: " + String(describing: poppedValue))
-    }
-    
-    func removeLast() {
-        print("---Example of remove last---")
-        var list = LinkedList<Int>()
-        list.push(3)
-        list.push(2)
-        list.push(1)
-        print("Before removing: \(list)")
-        let removedValue = list.removeLast()
-        print("After removing: \(list)")
-        print("Removed value: " + String(describing: removedValue))
-    }
-    
-    func removeAfter() {
-        print("---Example of remove after---")
-        var list = LinkedList<Int>()
-        list.push(3)
-        list.push(2)
-        list.push(1)
-        print("Before removing: \(list)")
-        let middleNode = list.node(at: 0)!
-        list.remove(after: middleNode)
-        print("After removing: \(list)")
+    func runAllNodeExamples() {
+        let examples = NodeExamples()
+        print("---- push ----")
+        let pushResult = examples.push(value: 100, to: node)
+        print(pushResult ?? "")
+        print("---- apend ----")
+        let appendResult = examples.append(value: 100, to: node)
+        print(appendResult ?? "")
+        print("---- count ----")
+        let count = examples.count(node: node)
+        print(count)
+        print("---- node at index ----")
+        let nodeIndexResult = examples.nodeAt(index: 2, node: node)
+        print(nodeIndexResult ?? "")
+        print("---- insert at index ----")
+        let insertNodeResult = examples.insertAt(index: 2, node: node, value: 100, dummyValue: -1)
+        print(insertNodeResult ?? "")
+        print("---- pop ----")
+        let popResult = examples.pop(node: node)
+        print(popResult ?? "")
+        print("---- remove last ----")
+        let removeLastResult = examples.removeLast(node: node, dummyValue: -1)
+        print(removeLastResult ?? "")
+        print("---- remove at index ----")
+        let removeAtIndexResult = examples.removeAt(index: 2, node: node, dummyValue: -1)
+        print(removeAtIndexResult ?? "")
     }
 }

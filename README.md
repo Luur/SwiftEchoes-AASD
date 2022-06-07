@@ -202,4 +202,14 @@ func detectCycle<T: Hashable>(_ head: ListNode<T>?) -> Bool {
     return true
 }
 ```
+3) Node print prettifier
+```swift
+extension ListNode: CustomStringConvertible {
+
+    public var description: String {
+        guard let next = next else { return "\(val)" }
+        return "\(val) -> " + String(describing: next)
+    }
+}
+```
 
