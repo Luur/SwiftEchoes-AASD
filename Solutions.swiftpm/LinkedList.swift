@@ -132,6 +132,18 @@ class LinkedList: ObservableObject {
     
     //https://leetcode.com/problems/reverse-linked-list/
     func reverseList(_ head: ListNode?) -> ListNode? {
+        var prev: ListNode? = nil
+        var curr = head
+        while curr != nil {
+            let next = curr?.next
+            curr?.next = prev
+            prev = curr
+            curr = next
+        }
+        return prev
+    }
+    
+    func reverseList1(_ head: ListNode?) -> ListNode? {
         var headCopy = head
         var result: ListNode?
         while headCopy != nil {
@@ -179,6 +191,15 @@ class LinkedList: ObservableObject {
             fast = fast?.next?.next
         }
         return result?.next
+    }
+    
+    func swapPairs1(_ head: ListNode?) -> ListNode? {
+        guard head != nil && head?.next != nil else { return head }
+        let slow = head
+        let fast = head?.next
+        slow?.next = swapPairs1(fast?.next)
+        fast?.next = slow
+        return fast
     }
     
     //https://leetcode.com/problems/delete-node-in-a-linked-list/  Delete Node in a Linked List
@@ -238,5 +259,237 @@ class LinkedList: ObservableObject {
             }
         }
         return head
+    }
+    
+    //https://leetcode.com/problems/remove-duplicates-from-an-unsorted-linked-list/
+    func deleteDuplicatesUnsorted(_ head: ListNode?) -> ListNode? {
+        var hash: [Int:Int] = [:]
+        var headCopy = head
+        while headCopy != nil {
+            if let value = hash[headCopy!.val] {
+                hash[headCopy!.val] = value + 1
+            } else {
+                hash[headCopy!.val] = 1
+            }
+            headCopy = headCopy?.next
+        }
+        let result = ListNode(-1)
+        var resultCopy: ListNode? = result
+        headCopy = head
+        while headCopy != nil {
+            if hash[headCopy!.val] == 1 {
+                resultCopy?.next = ListNode(headCopy!.val)
+                resultCopy = resultCopy?.next
+            }
+            headCopy = headCopy?.next
+        }
+        return result.next
+    }
+    
+    //Remove Duplicates from Sorted List II  https://leetcode.com/problems/remove-duplicates-from-sorted-list-ii/
+    func deleteDuplicates2(_ head: ListNode?) -> ListNode? {
+        let result = ListNode(-1)
+        var prevValue = -101
+        var resultCopy: ListNode? = result
+        var headCopy = head
+        while headCopy != nil {
+            if headCopy!.val != headCopy?.next?.val && headCopy!.val != prevValue {
+                resultCopy?.next = ListNode(headCopy!.val)
+                resultCopy = resultCopy?.next
+            }
+            prevValue = headCopy!.val
+            headCopy = headCopy?.next
+        }
+        return result.next
+    }
+    
+    // Reverse Linked List II, https://leetcode.com/problems/reverse-linked-list-ii/
+    func reverseBetween(_ head: ListNode?, _ left: Int, _ right: Int) -> ListNode? {
+        var headCopy: ListNode? = head
+        let leftPart = ListNode(-501)
+        var leftPartCopy: ListNode? = leftPart
+        let rightPart = ListNode(-502)
+        var rightPartCopy: ListNode? = rightPart
+        var i = 1
+        var mid: ListNode? = nil
+        while headCopy != nil {
+            if i >= left, i <= right {
+                mid = ListNode(headCopy!.val, mid)
+            }
+            if i < left {
+                leftPartCopy?.next = ListNode(headCopy!.val)
+                leftPartCopy = leftPartCopy?.next
+            }
+            if i > right {
+                rightPartCopy?.next = ListNode(headCopy!.val)
+                rightPartCopy = rightPartCopy?.next
+            }
+            i += 1
+            headCopy = headCopy?.next
+        }
+        var result = append(l1: mid, l2: rightPart.next)
+        result = append(l1: leftPart.next, l2: result)
+        return result
+    }
+        
+    private func append(l1: ListNode?, l2: ListNode?) -> ListNode? {
+        guard let l1 = l1 else { return l2 }
+        guard let l2 = l2 else { return l1 }
+        var l1Copy = l1
+        while l1Copy.next != nil {
+            l1Copy = l1Copy.next!
+        }
+        l1Copy.next = l2
+        return l1
+    }
+    
+    // https://leetcode.com/problems/find-the-minimum-and-maximum-number-of-nodes-between-critical-points/
+    func nodesBetweenCriticalPoints(_ head: ListNode?) -> [Int] {
+        var hash: [Int] = []
+        var headCopy = head
+        var index = 1
+        var prevValue: Int = headCopy!.val
+        var minValue = Int.max
+        while headCopy?.next != nil {
+            if (headCopy!.val > prevValue && headCopy!.val > headCopy!.next!.val) || (headCopy!.val < prevValue && headCopy!.val < headCopy!.next!.val) {
+                if let i = hash.last {
+                    minValue = min(minValue, index-i)
+                }
+                hash.append(index)
+            }
+            index += 1
+            prevValue = headCopy!.val
+            headCopy = headCopy?.next
+        }
+        guard hash.count > 1 else { return [-1, -1] }
+        let maxValue = hash[hash.count-1]-hash[0]
+        return [minValue, maxValue]
+    }
+    
+    //https://leetcode.com/problems/reorder-list/
+    func reorderList(_ head: ListNode?) {
+        guard head?.next != nil else { return }
+        var slow = head
+        var fast = head
+        var prev: ListNode? = head
+        while fast != nil && fast?.next != nil {
+            prev = slow
+            slow = slow?.next
+            fast = fast?.next?.next
+        }
+        prev?.next = nil
+        var reversed: ListNode? = nil
+        while slow != nil {
+            reversed = ListNode(slow!.val, reversed)
+            slow = slow?.next
+        }
+        var headCopy = head
+        var reversedCopy = reversed
+        while headCopy?.next != nil {
+            headCopy?.next = ListNode(reversedCopy!.val, headCopy?.next)
+            reversedCopy = reversedCopy?.next
+            headCopy = headCopy?.next?.next
+        }
+        headCopy?.next = reversedCopy
+    }
+    
+    func reorderList1(_ head: ListNode?) {
+        var headCopy = head
+        var count = 0
+        var reversedList: ListNode? = nil
+        while headCopy != nil {
+            count += 1
+            reversedList = ListNode(headCopy!.val, reversedList)
+            headCopy = headCopy?.next
+        }
+        headCopy = head
+        var reversedListCopy = reversedList
+        var i = 1
+        while count > i {
+            if i%2 != 0 {
+                headCopy?.next = ListNode(reversedListCopy!.val, headCopy?.next)
+                reversedListCopy = reversedListCopy?.next
+            }
+            headCopy = headCopy?.next
+            i += 1
+        }
+        headCopy?.next = nil
+    }
+    
+    //https://leetcode.com/problems/reverse-nodes-in-k-group/
+    func reverseKGroup(_ head: ListNode?, _ k: Int) -> ListNode? {
+        let headCopy = head
+        var ptr = head
+        var count = 0
+        while ptr != nil && count < k {
+            ptr = ptr?.next
+            count += 1
+        }
+        if count == k {
+            let reversed = reverse(headCopy, k)
+            headCopy?.next = reverseKGroup(ptr, k)
+            return reversed
+        }
+        return headCopy
+    }
+    
+    func reverse(_ head: ListNode?, _ k: Int) -> ListNode? {
+        var newHead: ListNode? = nil
+        var ptr = head
+        var kCopy = k
+        while kCopy > 0 {
+            let next = ptr?.next
+            ptr?.next = newHead
+            newHead = ptr
+            ptr = next
+            kCopy -= 1
+        }
+        return newHead
+    }
+    
+    func reverseKGroup1(_ head: ListNode?, _ k: Int) -> ListNode? {
+        let count = count(head)
+        var times = count/k
+        var isExtra = count%k != 0
+        var result: ListNode? = nil
+        guard k != count else { return push(head, result, k) }
+        while k*(times+1) != 0 {
+            var steps = k*times
+            var headCopy = head
+            while steps != 0 {
+                steps -= 1
+                headCopy = headCopy?.next
+            }
+            if isExtra {
+                result = headCopy
+                isExtra = false
+            } else {
+                result = push(headCopy, result, k)
+            }
+            times -= 1
+        }
+        return result
+    }
+    
+    private func push(_ head: ListNode?, _ result: ListNode?, _ k: Int) -> ListNode? {
+        var resultCopy = result
+        var headCopy = head
+        var kCopy = k
+        while headCopy != nil && kCopy != 0 {
+            resultCopy = ListNode(headCopy!.val, resultCopy)
+            headCopy = headCopy?.next
+            kCopy -= 1
+        }
+        return resultCopy
+    }
+    
+    private func count(_ head: ListNode?) -> Int {
+        var headCopy = head
+        var count = 0
+        while headCopy != nil {
+            count += 1
+            headCopy = headCopy?.next
+        }
+        return count
     }
 }
